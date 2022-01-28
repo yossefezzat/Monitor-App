@@ -3,6 +3,9 @@ const cookieParser = require("cookie-parser")
 const userRoutes = require('./routes/userRoutes')
 const checkRoutes = require('./routes/checkRoutes')
 const reportRoutes = require('./routes/reportRoutes')
+const {
+  run
+} = require('./polling/process')
 
 const app = express()
 
@@ -19,3 +22,5 @@ app.use(reportRoutes)
 app.listen(3000, () => {
   console.log('server up in port 3000')
 })
+
+run()

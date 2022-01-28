@@ -2,6 +2,10 @@ const mongoose = require('mongoose')
 require('../db/mongoose.js')
 
 const reportSchema = new mongoose.Schema({
+  statusCode: {
+    type: String,
+    default: "No Status yet"
+  },
   checkName: {
     type: String,
     required: true

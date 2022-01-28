@@ -20,7 +20,7 @@ const checkRouter = new express.Router()
 checkRouter.post('/check/create', authenticateToken, async (req, res) => {
   const newCheck = {
     name: req.body.name,
-    email: req.body.email,
+    email: req.email,
     URL: req.body.URL,
     timeInterval: req.body.timeInterval,
     timeOut: req.body.timeOut,

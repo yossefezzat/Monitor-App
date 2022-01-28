@@ -21,7 +21,7 @@ const checkSchema = new mongoose.Schema({
   timeInterval: {
     type: Number,
     required: true,
-    default: 600
+    default: 10
   },
   timeOut: {
     type: Number,

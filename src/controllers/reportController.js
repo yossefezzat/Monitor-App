@@ -70,6 +70,7 @@ const deleteAllReports = async (email) => {
   }
 }
 
+
 module.exports = {
   updateReportName,
   getAllReports,
