@@ -2,6 +2,15 @@ const axios = require('axios')
 const Check = require('../models/check')
 const Report = require('../models/report')
 
+const checkNewChecks = async (oldChecks) => {
+  const newChecks = await Check.find({})
+  // if user change status or add new check or update anything
+  if (JSON.stringify(newChecks) === JSON.stringify(oldChecks)) {
+    return false
+  }
+  return true
+}
+
 // get average of availability in terms of (ups | downs)
 const calcAvailability = async (upTimes, downTimes) => {
   const average = (upTimes / (upTimes + downTimes)) * 100
@@ -129,6 +138,35 @@ const updateStatusCode = async (checkName, email, status) => {
   })
 }
 
+// create history objects with last updatedTime
+const history = async (check) => {
+  const report = await Report.findOne({
+    email: check.email,
+    checkName: check.name
+  })
+  const historyObject = {
+    upTimes: report.upTime,
+    downTimes: report.downTime,
+    upTimePeriod: report.upTimePeriod,
+    downTimePeriod: report.downTimePeriod,
+    availability: report.availability,
+    averageResponseTime: report.averageResponseTime,
+    checkName: report.checkName,
+    email: report.email,
+    lastUpdate: report.updatedAt,
+    status: report.status,
+  }
+  await Report.updateOne({
+    email: report.email,
+    checkName: report.checkName
+  }, {
+    $push: {
+      history: historyObject
+    }
+  })
+}
+
+
 module.exports = {
   getAllChecks,
   updateUpTime,
@@ -138,5 +176,7 @@ module.exports = {
   avgResonseTime,
   updateUpPeriod,
   updateDownPeriod,
-  updateStatusCode
+  updateStatusCode,
+  checkNewChecks,
+  history
 }

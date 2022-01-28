@@ -1,4 +1,7 @@
 const pollingProcess = require('./processController')
+const {
+  sendDownCheckEmail
+} = require('../controllers/emailController')
 const axios = require('axios')
 
 async function startProcessConfig() {
@@ -25,6 +28,7 @@ const upCase = async (check, res) => {
   await pollingProcess.updateResponseTime(check.name, check.email, res.headers['duration'])
   await pollingProcess.updateAvailibilty(check.name, check.email)
   await pollingProcess.avgResonseTime(check.name, check.email, res.headers['duration'])
+  await pollingProcess.history(check)
 }
 
 const downCase = async (check, err) => {
@@ -33,12 +37,13 @@ const downCase = async (check, err) => {
   await pollingProcess.updateDownPeriod(check.name, check.email, check.timeInterval * 60)
   await pollingProcess.updateAvailibilty(check.name, check.email)
   await pollingProcess.avgResonseTime(check.name, check.email, check.timeOut * 1000)
-
+  await pollingProcess.history(check)
+  await sendDownCheckEmail(check)
 }
 
 const runCheck = async (check) => {
-  console.log(check.URL)
   if (check.status) {
+    console.log(check.URL)
     const res = await axios.get(check.URL, {
       timeout: check.timeOut * 1000
     }).then((res) => {
@@ -55,9 +60,15 @@ const run = async () => {
   checks.forEach((check) => {
     let interval = setInterval(async () => {
       runCheck(check)
+      if (await pollingProcess.checkNewChecks(checks)) {
+        clearInterval(interval)
+        run()
+      }
     }, check.timeInterval * 1000 * 60)
   })
-
+  if (checks.length === 0) {
+    run()
+  }
 }
 
 module.exports = {

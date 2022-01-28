@@ -26,6 +26,7 @@ checkRouter.post('/check/create', authenticateToken, async (req, res) => {
     timeOut: req.body.timeOut,
     tags: req.body.tags,
     threshold: req.body.threshold,
+    status: req.body.status,
     webhook: req.body.webhook
   }
   try {

@@ -36,22 +36,25 @@ const sendVerificationMail = (user, host) => {
   })
 }
 
-// const sendCancelationEmail = (name, email) => {
-//   const options = {
-//     from: username,
-//     to: email,
-//     subject: 'Oops, Sorry to see you go',
-//     text: `Goodbye, ${name}. I hope to see you back sometime soon`
-//   }
-//   transporter.sendMail(options, (err, info) => {
-//     if (err) {
-//       console.log(err)
-//       return
-//     }
-//     console.log('sent' + info.response)
-//   })
-// }
+const sendDownCheckEmail = (check) => {
+  const options = {
+    from: username,
+    to: check.email,
+    subject: `${check.name} service is Down `,
+    text: `
+      Service Name: ${check.name} \n
+    `
+  }
+  transporter.sendMail(options, (err, info) => {
+    if (err) {
+      console.log(err)
+      return
+    }
+    console.log('sent' + info.response)
+  })
+}
 
 module.exports = {
-  sendVerificationMail
+  sendVerificationMail,
+  sendDownCheckEmail
 }
