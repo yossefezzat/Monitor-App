@@ -1,0 +1,33 @@
+{
+  "name": "monitor-app",
+  "version": "1.0.0",
+  "description": "monitor app to monitor websites urls and generate reports",
+  "main": "index.js",
+  "scripts": {
+    "dev": "SET NODE_ENV=dev&nodemon ./src/index.js",
+    "start:": "node src/index",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "youssef ezzat",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.25.0",
+    "bcrypt": "^5.0.1",
+    "config": "^3.3.7",
+    "cookie-parser": "^1.4.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^14.2.0",
+    "express": "^4.17.2",
+    "express-rate-limit": "^6.2.0",
+    "helmet": "^5.0.2",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.1.7",
+    "nodemailer": "^6.7.2",
+    "validator": "^13.7.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.7.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "nodemon": "^2.0.15"
+  }
+}
