@@ -19,14 +19,15 @@ const calcAvailability = async (upTimes, downTimes) => {
 
 // get the average of response time in terms of (ups | downs) 
 const calcAvgResponseTime = async (responseTime, upTimes, downTimes, currentReponseTime) => {
-  const avgResponse = ((responseTime + currentReponseTime) * (upTimes + downTimes) - 1) /
+  const avgResponse = (responseTime + currentReponseTime * (upTimes + downTimes) - 1) /
     (upTimes + downTimes)
   return avgResponse
 }
 
 // get all user checks
 const getAllChecks = async () => {
-  const checks = await Check.find()
+  const checks = await Check.find({})
+
   return checks
 }
 
@@ -176,6 +177,30 @@ const history = async (check) => {
   })
 }
 
+const sendToWebHook = async (name, email, instance) => {
+  const check = await Check.findOne({
+    name,
+    email
+  })
+
+  const checkName = await check.name
+  const webhookUrl = await check.webhook
+  if (!webhookUrl) {
+    return
+  }
+  const report = await Report({
+    checkName,
+    email
+  })
+  const lastHistoryObj = await JSON.stringify(report.history)
+  instance = await axios.create()
+  await instance.post(webhookUrl, {
+    "history": lastHistoryObj
+  }).catch((err) => {
+    console.log('heloo')
+  })
+}
+
 
 module.exports = {
   getAllChecks,
@@ -189,5 +214,6 @@ module.exports = {
   updateStatusCode,
   checkNewChecks,
   getDowntimes,
-  history
+  history,
+  sendToWebHook
 }

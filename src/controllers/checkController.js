@@ -139,6 +139,7 @@ const updateCheckName = async (name, email, newName) => {
     msg: 'check updated'
   }
 }
+
 // Change check status check
 const doPauseCheck = async (name, email) => {
   const check = await Check.exists({
@@ -176,20 +177,13 @@ const doActiveCheck = async (name, email) => {
     name,
     email
   }, {
-    status: false
+    status: true
   })
   return {
     msg: 'check activated'
   }
 }
 
-// const getAllActiveChecks = (email) => {
-
-// }
-
-// const getAllPausedChecks = (email) => {
-
-// }
 
 
 

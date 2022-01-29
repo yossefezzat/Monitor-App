@@ -3,7 +3,6 @@ const {
   userSignUp,
   emailVerification,
   userLogin,
-  userLogout
 } = require('../controllers/authController')
 
 const {
@@ -18,7 +17,7 @@ userRouter.post('/login', userLogin)
 
 userRouter.get('/verify-email', emailVerification)
 
-userRouter.get('/logout', authenticateToken, userLogout)
+//userRouter.get('/logout', authenticateToken, userLogout)
 
 userRouter.get('/test', authenticateToken, (req, res) => {
   res.send('helooo')

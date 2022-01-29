@@ -21,26 +21,36 @@ const userSignUp = async (req, res) => {
     res.send({
       'success': 'Check your email to verify your account...'
     })
-  } catch (e) {
-    res.status(500).send()
+  } catch (err) {
+    res.status(400).json({
+      msg: 'Bad request',
+      errors: err.errors,
+    });
   }
 }
 
 const userLogin = async (req, res) => {
   try {
+
     const user = await User.findByCredentials(req.body.email, req.body.password)
+
     const tokenUser = {
       email: user.email,
       password: user.password
     }
+    if (user.isVerified === false) {
+      res.status(401).send({
+        msg: "you are not verified to login, please check your email to verify your account"
+      })
+    }
     const accessToken = await jwt.sign(tokenUser, config.get('token.jwtKey'))
-    //{ maxAge: parseInt(process.env.TOKEN_MAX_AGE_IN_SEC*1000, 10) }
-    res.cookie("Authorization", "Bearer " + accessToken, {
-      maxAge: 60 * 1000 * 60 * 60
+
+    res.send({
+      msg: 'you are logged in successfully',
+      api_key: accessToken
     })
-    res.json('Loggedin')
   } catch (e) {
-    res.status(400).send()
+    res.status(400).send(e)
   }
 }
 
@@ -57,23 +67,19 @@ const emailVerification = async (req, res) => {
   user.isVerified = true
   user.email_token = null
   await user.save()
-  res.send({
-    msg: 'email verified'
-  })
+  res.redirect('/')
 }
 
-const userLogout = (req, res) => {
-  try {
-    res.clearCookie("Authorization");
-    res.json("Cookie is destroyed! You are logout Successfully");
-  } catch (error) {
-    res.status(400).json(error);
-  }
-}
+// const userLogout = async (req, res) => {
+//   try {
+//     res.send("You are logout Successfully");
+//   } catch (error) {
+//     res.status(400).json(error);
+//   }
+// }
 
 module.exports = {
   userSignUp,
   emailVerification,
   userLogin,
-  userLogout
 }
