@@ -1,6 +1,5 @@
 const express = require('express')
 const helmet = require('helmet')
-const expressLimit = require('express-rate-limit')
 const userRoutes = require('./routes/userRoutes')
 const checkRoutes = require('./routes/checkRoutes')
 const reportRoutes = require('./routes/reportRoutes')
@@ -17,15 +16,6 @@ app.use(express.json())
 
 // Using helmet to increase security
 app.use(helmet());
-
-// // Using Limiter to prevent attacks
-// const apiLimiter = expressLimit.rateLimit({
-//   windowMs: 15 * 60 * 1000, // 15 min is the time of our cycle
-//   max: 100, // Max number of requests
-//   delayMs: 0, // Disable delay between each request
-//   // Each ip will be able to make only 100 request in each 15 min with no delay between requests
-// });
-// app.use(apiLimiter); // apply to all requests
 
 // Simple main api url response
 app.get('/', (req, res) => {

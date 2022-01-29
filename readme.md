@@ -57,3 +57,19 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 ### Users may receive a notification on a webhook URL by sending HTTP POST request whenever a check goes down or up.
 ### Users should receive email alerts whenever a check goes down or up.
 ### Users can get detailed uptime reports about their checks availability, average response time, and total uptime/downtime.
+
+<br>
+
+## Dependencies
+
+#### "axios": "^0.25.0",
+#### "bcrypt": "^5.0.1",
+#### "config": "^3.3.7",
+#### "crypto": "^1.0.1",
+#### "dotenv": "^14.2.0",
+#### "express": "^4.17.2",
+#### "helmet": "^5.0.2",
+#### "jsonwebtoken": "^8.5.1",
+#### "mongoose": "^6.1.7",
+#### "nodemailer": "^6.7.2",
+#### "validator": "^13.7.0"
