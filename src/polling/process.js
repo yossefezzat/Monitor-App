@@ -61,6 +61,9 @@ const runCheck = async (check) => {
 const run = async () => {
   startProcess();
   let checks = await pollingProcess.getAllChecks();
+  if (checks.length === 0) {
+    run()
+  }
   checks.forEach(async (check) => {
     let interval = setInterval(async () => {
       await runCheck(check);
@@ -71,9 +74,7 @@ const run = async () => {
       } else {}
     }, (check.timeInterval) * 1000 * 60)
   });
-  if (checks.length === 0) {
-    run()
-  }
+
 }
 
 module.exports = {
