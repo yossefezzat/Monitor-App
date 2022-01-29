@@ -80,6 +80,3 @@ const run = async () => {
 module.exports = {
   run
 }
-
-
-console.log('hello')
