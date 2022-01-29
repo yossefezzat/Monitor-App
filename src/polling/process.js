@@ -58,7 +58,7 @@ const runCheck = async (check) => {
   }
 }
 
-let run = async () => {
+const run = async () => {
   startProcess();
   let checks = await pollingProcess.getAllChecks();
   checks.forEach(async (check) => {
