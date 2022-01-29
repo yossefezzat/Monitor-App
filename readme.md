@@ -1,5 +1,7 @@
 # Welcome to Monitor RESTFUl API
 
+<br>
+
 ### Welcome to Monitor RESTFUl API! Here you'll find all the documentation you need to get up and running with it.
 
 <br>
@@ -62,14 +64,14 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 ## Dependencies
 
-#### "axios": "^0.25.0",
-#### "bcrypt": "^5.0.1",
-#### "config": "^3.3.7",
-#### "crypto": "^1.0.1",
-#### "dotenv": "^14.2.0",
-#### "express": "^4.17.2",
-#### "helmet": "^5.0.2",
-#### "jsonwebtoken": "^8.5.1",
-#### "mongoose": "^6.1.7",
-#### "nodemailer": "^6.7.2",
-#### "validator": "^13.7.0"
+* #### "axios": "^0.25.0",
+* #### "bcrypt": "^5.0.1",
+* #### "config": "^3.3.7",
+* #### "crypto": "^1.0.1",
+* #### "dotenv": "^14.2.0",
+* #### "express": "^4.17.2",
+* #### "helmet": "^5.0.2",
+* #### "jsonwebtoken": "^8.5.1",
+* #### "mongoose": "^6.1.7",
+* #### "nodemailer": "^6.7.2",
+* #### "validator": "^13.7.0"
