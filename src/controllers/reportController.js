@@ -71,9 +71,6 @@ const deleteAllReports = async (email) => {
 }
 
 
-const history = async (name, email) => {
-
-}
 
 
 module.exports = {

@@ -1,3 +1,6 @@
+const {
+  getCheckReport
+} = require('./reportController')
 const nodemailer = require('nodemailer')
 const config = require('config')
 
@@ -36,25 +39,27 @@ const sendVerificationMail = (user, host) => {
   })
 }
 
-const sendDownCheckEmail = (check) => {
+const sendDownCheckEmail = async (check) => {
+  const report = await getCheckReport(check.name, check.email)
   const options = {
     from: username,
     to: check.email,
     subject: `${check.name} service is Down `,
     text: `
       Service Name: ${check.name} \n
+      Service Url: ${check.URL} \n 
+      Response Time: ${0} \n
+      Availability of the Service: ${Math.floor(report.availability)} % 
     `
   }
   transporter.sendMail(options, (err, info) => {
     if (err) {
-      console.log(err)
       return
     }
-    console.log('sent' + info.response)
   })
 }
 
 module.exports = {
   sendVerificationMail,
-  sendDownCheckEmail
+  sendDownCheckEmail,
 }

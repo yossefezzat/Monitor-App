@@ -3,7 +3,7 @@ const Check = require('../models/check')
 const Report = require('../models/report')
 
 const checkNewChecks = async (oldChecks) => {
-  const newChecks = await Check.find({})
+  let newChecks = await Check.find({})
   // if user change status or add new check or update anything
   if (JSON.stringify(newChecks) === JSON.stringify(oldChecks)) {
     return false
@@ -19,7 +19,7 @@ const calcAvailability = async (upTimes, downTimes) => {
 
 // get the average of response time in terms of (ups | downs) 
 const calcAvgResponseTime = async (responseTime, upTimes, downTimes, currentReponseTime) => {
-  const avgResponse = (responseTime + currentReponseTime * (upTimes + downTimes - 1)) /
+  const avgResponse = ((responseTime + currentReponseTime) * (upTimes + downTimes) - 1) /
     (upTimes + downTimes)
   return avgResponse
 }
@@ -109,7 +109,7 @@ const updateUpPeriod = async (checkName, email, upTimeInterval) => {
     email
   }, {
     $inc: {
-      upTimePeriod: upTimeInterval
+      upTimePeriod: upTimeInterval * 60
     }
   })
 }
@@ -121,14 +121,14 @@ const updateDownPeriod = async (checkName, email, downTimeInterval) => {
     email
   }, {
     $inc: {
-      downTimePeriod: downTimeInterval
+      downTimePeriod: downTimeInterval * 60
     }
   })
 }
 
 // update status code response 
 const updateStatusCode = async (checkName, email, status) => {
-  await Report.findByIdAndUpdate({
+  await Report.findOneAndUpdate({
     checkName,
     email
   }, {
@@ -136,6 +136,16 @@ const updateStatusCode = async (checkName, email, status) => {
       statusCode: status
     }
   })
+}
+
+// get number of times service down
+const getDowntimes = async (checkName, email) => {
+  const report = await Report.findOne({
+    checkName,
+    email
+  })
+  const downTimes = await report.downTime
+  return downTimes
 }
 
 // create history objects with last updatedTime
@@ -178,5 +188,6 @@ module.exports = {
   updateDownPeriod,
   updateStatusCode,
   checkNewChecks,
+  getDowntimes,
   history
 }
