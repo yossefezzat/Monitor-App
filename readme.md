@@ -60,7 +60,6 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
   * #####  `Polling` : It is defined as the process when a client requests a particular piece of data at regular intervals (maybe every x seconds) and the server reverts with a usual response with the required data.
   * #####  `streaming` : Streaming is done through sockets, In Layman terms, sockets are a file that your computer can write/read from in a long width connection with another computer, an open connection till one machine turns it off.
 <img src="/polling.png" text-align="center" title="polling vs streaming">
-<br>
 
 * #### `Stateless Authentication`
   * #### Token-based authentication enables users to obtain a token that allows them to access a service and/or fetch a specific resource without using their username and password to authenticate every request. Because the token can be a self-contained entity that conveys all the required information for authenticating the request, it is often referred to as stateless authentication. In this case, the server side does not need to maintain the state of a user.
@@ -104,3 +103,19 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 * #### `EMAIL_SERVICE=` -> Service of you email (eg. yahoo, gmail ..)
 * #### `EMAIL_USERNAME=`-> Your email username
 * #### `EMAIL_PASSWORD=`-> Your token/password to access your mail service
+
+## Polling Process Report
+  * #### Google
+    * #### Check data
+        <pre>
+          <code>[{
+            "_id":{"$oid":"61f564af4a9969f4ceec10a2"},
+            "name":"google",
+            "email":"ye.fci2020@gmail.com",
+            "URL":"http://www.google.com",
+            "status":true,"timeInterval":5,
+            "timeOut":1,"threshold":2,
+            "tags":["face"],
+            "webhook":"https://webhook.site/8f427736-4b7f-489f-8613-444f2a433945"
+            "__v":0,
+        }]</code>
