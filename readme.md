@@ -60,7 +60,7 @@ Runs the app in the test mode with another database to test users Auth .<br />
 Runs the app in the productions mode<br />
 
 ### `Heroku Deployment`
-Open [https://ezzat-monitor-app.herokuapp.com/](Monitor App)
+Open [https://ezzat-monitor-app.herokuapp.com/](https://ezzat-monitor-app.herokuapp.com/) to view in live. <br />
 
 
 <br>
