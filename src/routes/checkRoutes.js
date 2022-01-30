@@ -9,6 +9,11 @@ const {
   deleteAllChecks,
   doActiveCheck,
   doPauseCheck,
+  addNewTag,
+  updateTagName,
+  deleteTagName,
+  deleteAllTags,
+  getAllChecksByTags,
 
 } = require('../controllers/checkController')
 const {
@@ -17,6 +22,7 @@ const {
 
 const checkRouter = new express.Router()
 
+// create a new check
 checkRouter.post('/check/create', authenticateToken, async (req, res) => {
   const newCheck = {
     name: req.body.name,
@@ -136,5 +142,80 @@ checkRouter.patch('/check/pause', authenticateToken, async (req, res) => {
     })
   }
 })
+
+// add tag to check
+checkRouter.post('/check/add/tag', authenticateToken, async (req, res) => {
+  try {
+    await addNewTag(req.body.name, req.email, req.body.tag)
+    res.send({
+      msg: 'tag is added successfully'
+    })
+  } catch (e) {
+    res.status(400).send({
+      msg: 'Unable to add the tag',
+      error: e.errors
+    })
+  }
+})
+
+// update check tag name
+checkRouter.patch('/check/update/tag', authenticateToken, async (req, res) => {
+  try {
+    await updateTagName(req.body.name, req.email, req.body.oldtag, req.body.newtag)
+    res.send({
+      msg: 'tag is updated successfully'
+    })
+  } catch (e) {
+    res.status(400).send({
+      msg: 'Unable to update the tag',
+      error: e.errors
+    })
+  }
+})
+
+// delete check tag name
+checkRouter.delete('/check/delete/tag', authenticateToken, async (req, res) => {
+  try {
+    await deleteTagName(req.body.name, req.email, req.body.tag)
+    res.send({
+      msg: 'tag is deteled successfully'
+    })
+  } catch (e) {
+    res.status(400).send({
+      msg: 'Unable to deleted the tag',
+      error: e.errors
+    })
+  }
+})
+
+// delete all tags in check
+checkRouter.delete('/check/delete/tag/all', authenticateToken, async (req, res) => {
+  try {
+    await deleteAllTags(req.body.name, req.email, req.body.tag)
+    res.send({
+      msg: 'all tags are deteled successfully'
+    })
+  } catch (e) {
+    res.status(400).send({
+      msg: 'Unable to deleted tags',
+      error: e.errors
+    })
+  }
+})
+
+// get user checks by tagname
+checkRouter.get('/check/tag', authenticateToken, async (req, res) => {
+  try {
+    const checks = await getAllChecksByTags(req.email, req.body.tag)
+    res.send(checks)
+  } catch (e) {
+    res.status(400).send({
+      msg: 'Unable to checks by tag',
+      error: e.errors
+    })
+  }
+})
+
+
 
 module.exports = checkRouter

@@ -184,8 +184,119 @@ const doActiveCheck = async (name, email) => {
   }
 }
 
+// push new tag to the check 
+const addNewTag = async (name, email, tagname) => {
+  if (!tagname) throw new Error({
+    msg: 'please add a tagname'
+  })
+  const check = await Check.findOne({
+    name,
+    email
+  })
+  if (!check)
+    return {
+      msg: 'check not found'
+    }
+  await Check.updateOne({
+    name,
+    email
+  }, {
+    $push: {
+      tags: tagname
+    }
+  })
+  return {
+    msg: 'Tag is added'
+  }
+}
 
+// update tag name
+const updateTagName = async (name, email, oldTag, newTag) => {
+  if (!oldTag || !newTag) throw new Error('unable to update the tag')
+  const check = await Check.findOne({
+    name,
+    email
+  })
+  if (!check)
+    return {
+      msg: 'check not found'
+    }
+  const tags = await check.tags
+  const index = tags.indexOf(oldTag)
+  tags[index] = newTag
+  await Check.updateOne({
+    name,
+    email
+  }, {
+    $set: {
+      tags: tags
+    }
+  })
+  return {
+    msg: 'Tag is updated'
+  }
+}
 
+//delete tag name
+const deleteTagName = async (name, email, tagname) => {
+  if (!tagname) throw new Error('unable to delete the tag')
+  const check = await Check.findOne({
+    name,
+    email
+  })
+  if (!check)
+    return {
+      msg: 'check not found'
+    }
+  const tags = await check.tags
+  const index = tags.indexOf(tagname)
+  tags.splice(index, 1);
+  await Check.updateOne({
+    name,
+    email
+  }, {
+    $set: {
+      tags: tags
+    }
+  })
+  return {
+    msg: 'Tag is deleted'
+  }
+}
+
+// delete all tags in check
+const deleteAllTags = async (name, email) => {
+  const check = await Check.exists({
+    email,
+    name
+  })
+  if (!check) return {
+    msg: 'check not found'
+  }
+  await Check.updateOne({
+    name,
+    email
+  }, {
+    $set: {
+      tags: []
+    }
+  })
+  return {
+    msg: 'all tags are deleted'
+  }
+}
+
+// get all checks by tag
+const getAllChecksByTags = async (email, tag) => {
+  const checks = await Check.find({
+    email,
+    tags: tag
+  })
+  if (!checks) return {
+    msg: 'no checks with this tag'
+  }
+  return checks
+}
 
 module.exports = {
   createNewCheck,
@@ -197,4 +308,9 @@ module.exports = {
   deleteAllChecks,
   doActiveCheck,
   doPauseCheck,
+  addNewTag,
+  updateTagName,
+  deleteTagName,
+  deleteAllTags,
+  getAllChecksByTags
 }
