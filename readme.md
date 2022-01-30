@@ -53,6 +53,16 @@ In the project directory, you can run:
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
+<br>
+
+## Challenges
+* #### difference between `streaming` and `polling`
+  * #####  `Polling` : It is defined as the process when a client requests a particular piece of data at regular intervals (maybe every x seconds) and the server reverts with a usual response with the required data.
+  * #####  `streaming` : Streaming is done through sockets, In Layman terms, sockets are a file that your computer can write/read from in a long width connection with another computer, an open connection till one machine turns it off.
+
+<img src="/polling.png"  title="polling vs streaming">
+
+<br>
 
 ## Fearures
 
