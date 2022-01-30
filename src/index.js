@@ -33,4 +33,4 @@ app.listen(3000, () => {
 });
 
 // running polling process
-//run();
+run();
