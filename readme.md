@@ -18,13 +18,17 @@ The API provides the following features:
   - GET User checks
   - GET Check report
   - GET User reports
+  - GET User checks by tag
   - POST Create a new check
   - PUT Update check activity (paused)
   - PUT Update check activity (activated)
   - PUT Update check url
   - PUT Update check name
+  - PUT Update tag name
   - DELETE Remove check and assigned report
   - DELETE Remove all user checks and assigned reports
+  - DELETE Remove tag from check
+  - DELETE Remove all tags from check
 
 <br>
 
@@ -75,3 +79,15 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 * #### "mongoose": "^6.1.7",
 * #### "nodemailer": "^6.7.2",
 * #### "validator": "^13.7.0"
+
+## Configuration
+
+#### You have add your .env file that contain:
+* #### `PORT=`          -> Port to run your dev  
+* #### `JWT_SECRET=`    -> Jwt secret to generate jwt tokens api_key
+* #### `MONGODB_URL=`   -> Import your database url
+
+* #### `EMAIL_HOST=`    -> Host of your email service (smtp...)
+* #### `EMAIL_SERVICE=` -> Service of you email (eg. yahoo, gmail ..)
+* #### `EMAIL_USERNAME=`-> Your email username
+* #### `EMAIL_PASSWORD=`-> Your token/password to access your mail service
