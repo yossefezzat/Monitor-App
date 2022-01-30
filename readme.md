@@ -113,9 +113,30 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
             "name":"google",
             "email":"ye.fci2020@gmail.com",
             "URL":"http://www.google.com",
-            "status":true,"timeInterval":5,
-            "timeOut":1,"threshold":2,
-            "tags":["face"],
+            "status":true,
+            "timeInterval":5,
+            "timeOut":1,
+            "threshold":2,
+            "tags":["run"],
             "webhook":"https://webhook.site/8f427736-4b7f-489f-8613-444f2a433945"
             "__v":0,
         }]</code>
+    * #### Report response
+      <pre>
+        <code>[{
+           "_id":{"$oid":"61f564af4a9969f4ceec10a6"},
+           "statusCode":"200",
+           "checkName":"google",
+           "email":"ye.fci2020@gmail.com",
+           "responseTime":269,
+           "upTime":48,
+           "downTime":2,
+           "availability":96,
+           "upTimePeriod":14400,
+           "downTimePeriod":600,
+           "averageResponseTime":274.36,
+           "createdAt":{"$date":"2022-01-29T16:00:47.644Z"},
+           "updatedAt":{"$date":"2022-01-30T00:30:50.015Z"},
+           "__v":0}
+        }]</code>
+        
