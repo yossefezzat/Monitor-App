@@ -30,7 +30,7 @@ const userSignUp = async (req, res) => {
       msg: 'Check your email to verify your account...'
     })
   } catch (err) {
-    res.status(500).json({
+    res.status(400).json({
       msg: 'Credentials are not valid',
       errors: err.errors,
     });
