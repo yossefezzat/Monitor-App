@@ -56,10 +56,14 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 <br>
 
 ## Challenges
-* #### difference between `streaming` and `polling`
+* #### Difference between `streaming` and `polling`
   * #####  `Polling` : It is defined as the process when a client requests a particular piece of data at regular intervals (maybe every x seconds) and the server reverts with a usual response with the required data.
   * #####  `streaming` : Streaming is done through sockets, In Layman terms, sockets are a file that your computer can write/read from in a long width connection with another computer, an open connection till one machine turns it off.
 <img src="/polling.png" text-align="center" title="polling vs streaming">
+<br>
+
+* #### `Stateless Authentication`
+  * #### Token-based authentication enables users to obtain a token that allows them to access a service and/or fetch a specific resource without using their username and password to authenticate every request. Because the token can be a self-contained entity that conveys all the required information for authenticating the request, it is often referred to as stateless authentication. In this case, the server side does not need to maintain the state of a user.
 
 <br>
 
