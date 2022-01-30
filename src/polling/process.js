@@ -39,10 +39,10 @@ const downCase = async (check, err) => {
   //await pollingProcess.avgResonseTime(check.name, check.email, check.timeOut * 1000)
   await pollingProcess.history(check)
   // Apply Threshold to the downTimes to send an notify email
-  // if (await pollingProcess.getDowntimes(check.name, check.email) % check.threshold === 0) {
-  //   await sendDownCheckEmail(check)
-  //   await pollingProcess.sendToWebHook(check.name, check.email, instance = undefined)
-  // }
+  if (await pollingProcess.getDowntimes(check.name, check.email) % check.threshold === 0) {
+    await sendDownCheckEmail(check)
+    await pollingProcess.sendToWebHook(check.name, check.email, instance = undefined)
+  }
 }
 
 const runCheck = async (check) => {
@@ -61,9 +61,6 @@ const runCheck = async (check) => {
 const run = async () => {
   startProcess();
   let checks = await pollingProcess.getAllChecks();
-  if (checks.length === 0) {
-    run()
-  }
   checks.forEach(async (check) => {
     let interval = setInterval(async () => {
       await runCheck(check);
@@ -73,6 +70,9 @@ const run = async () => {
         run()
       } else {}
     }, (check.timeInterval) * 1000 * 60)
+    if (checks.length === 0) {
+      run()
+    }
   });
 
 }

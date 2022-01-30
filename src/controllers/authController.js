@@ -1,12 +1,10 @@
 const User = require('../models/user')
-const jwt = require('jsonwebtoken')
 const crypto = require('crypto')
-const config = require('config')
 const {
   sendVerificationMail
 } = require('./emailController')
 
-
+// user signup
 const userSignUp = async (req, res) => {
   const user = new User({
     name: req.body.name,
@@ -16,67 +14,76 @@ const userSignUp = async (req, res) => {
     isVerified: false
   })
   try {
+    const emailExisted = await User.exists({
+      email: req.body.email
+    })
+    // check if email existed or not 
+    if (emailExisted)
+      return res.status(400).send({
+        msg: 'Email is already existed'
+      })
+    // save user in case email not existed
     await user.save()
-    await sendVerificationMail(user, req.headers.host)
+    //send verification email to keep user login later on
+    sendVerificationMail(user, req.headers.host)
     res.send({
-      'success': 'Check your email to verify your account...'
+      msg: 'Check your email to verify your account...'
     })
   } catch (err) {
-    res.status(400).json({
-      msg: 'Bad request',
+    res.status(500).json({
+      msg: 'Credentials are not valid',
       errors: err.errors,
     });
   }
 }
 
+// user login
 const userLogin = async (req, res) => {
   try {
-
+    // check user credentials to login  
     const user = await User.findByCredentials(req.body.email, req.body.password)
-
-    const tokenUser = {
-      email: user.email,
-      password: user.password
-    }
+    // check if user verified or not 
     if (user.isVerified === false) {
       res.status(401).send({
         msg: "you are not verified to login, please check your email to verify your account"
       })
     }
-    const accessToken = await jwt.sign(tokenUser, config.get('token.jwtKey'))
-
+    // generate Api_key using Jwt
+    const accessToken = await user.generateAuthToken()
     res.send({
       msg: 'you are logged in successfully',
       api_key: accessToken
     })
   } catch (e) {
-    res.status(400).send(e)
+    res.status(400).send({
+      msg: 'Credentials are not valid',
+      error: e.errors
+    })
   }
 }
 
+// email verification
 const emailVerification = async (req, res) => {
+  // get the email verification token from the query in url to verify user
   const token = req.query.token
+  //find the user with this email token
   const user = await User.findOne({
     email_token: token
   })
+  // check if user is here or not
   if (!user) {
     return res.status(404).send({
-      msg: 'Not Found'
+      msg: 'user not Found'
     })
   }
+  //turn isVerified status to true to keep user login later
   user.isVerified = true
-  user.email_token = null
+  // remove email token from user object
+  user.email_token = undefined
+  // save user
   await user.save()
   res.redirect('/')
 }
-
-// const userLogout = async (req, res) => {
-//   try {
-//     res.send("You are logout Successfully");
-//   } catch (error) {
-//     res.status(400).json(error);
-//   }
-// }
 
 module.exports = {
   userSignUp,
