@@ -51,7 +51,17 @@ In the project directory, you can run:
 ### `npm run dev`
 
 Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Open [http://localhost:3000](http://localhost:3000) to view it in the browser.<br />
+
+### `npm run test`
+Runs the app in the test mode with another database to test users Auth .<br />
+
+### `npm run start`
+Runs the app in the productions mode<br />
+
+### `Heroku Deployment`
+Open [https://ezzat-monitor-app.herokuapp.com/](Monitor App)
+
 
 <br>
 
